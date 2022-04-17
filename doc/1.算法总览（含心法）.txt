@@ -1,0 +1,59 @@
+核心观点
+    每一个领域都应该有一颗 semantic tree 语法树 ==> 一生二，二生三，三生万物 [格物分类(共性/异点)及关联]
+
+学习方法
+    3分理解，7分练习(刻意练习，长期间隔练习) [个人内部价值驱动]
+
+    不要死磕 -- 第一目的是 记住[你以为是在记忆什么？这是人类的智慧结晶]，第二目的是 理解，第三目的是 运用
+    切题四步 -- 1.反复思考提问确保理解正确 2.思考全部解法(时空复杂度+加强) 3.编码 4.测试样例
+    五毒神掌 -- 五遍练习
+                    第一遍 [1.15分钟读题思考 2.无思路直接看多种解法(比较优劣) 3.背诵默写]
+                    第二遍 [selfCode commit debug 多种写法]
+                    第三遍 [again]
+                    第四遍 [repeat 不牢固的]
+                    第五遍 [面试前复习]
+    博采众长 -- 国内版+国际版，智慧不嫌多，一定不要懒
+    平时反馈 -- 自己主动去看高手代码，高手看你代码
+
+数据结构分类
+    基础物理结构
+        数组
+        链表
+    初级数据结构
+        栈，队列，集合，映射，树，图
+    复杂数据结构
+        位运算
+        布隆过滤器
+        LRU Cache
+        跳表
+        红黑树
+
+控制流
+    if-else
+    for-while
+    recursion
+
+工具
+    环境及资源
+        Chrome + Google + StackOverflow
+        Mac + iterm2 + zsh + oh-my-zsh
+        VSCode/IntelliJ/PyCharm[Leetcode plugin] + Java/Python
+        国际版 leetcode.com + 国内版 leetcode-cn.com [题解/discuss(Most Votes)]
+    编码技巧
+        编辑技巧
+            fn+delete
+            行首尾 command+左右
+            单词跳跃 option+左右
+            单词删除 option+delete
+            整行选中 shift+command+左右
+        编辑器自动补全
+            option+回车
+            模板缩写+回车
+            文件切换?最近文件/...
+        自顶向下编程
+            关键函数置于最上
+            从顶部设计函数功能，然后再细化，设计单个函数的实现(可再延展出多个子函数)
+    code-style
+        Google/Facebook/Alibaba/...
+    UnitTest
+        JUnit/ScalaTest
