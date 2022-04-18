@@ -91,6 +91,6 @@ object ResolveTemplate {
     }
 
     val example = new AnonymousExample()
-    example.testAllSolution(InputSet(Array.empty))
+    example.testAllSolution(InputSet(Array(Array.empty[Any])))
   }
 }
