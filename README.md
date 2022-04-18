@@ -33,3 +33,6 @@
         4.主方法 * 1
         5.foo方法 * 1
 ```
+### 测试框架
+Java: Junit 5
+Scala: ScalaTest 3 - Scala 3
