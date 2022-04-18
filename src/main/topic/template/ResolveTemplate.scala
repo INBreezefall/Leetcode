@@ -19,22 +19,22 @@ case class ResultSet(var res: Array[Array[Any]], var funcName: String)
 
 trait ResolveTemplate {
   // TODO 使用 Scala 3 反射 进行函数遍历
-  val funcList: List[InputSet => ResultSet] = List(fooSolution, optimumSolution, peculiarSolution_1,
-    peculiarSolution_2, peculiarSolution_3)
+  private val funcList: List[InputSet => ResultSet] = List(fooSolution, optimumSolution,
+    peculiarSolution_1, peculiarSolution_2, peculiarSolution_3)
 
   /**
    * 首个函数运行 会进行 首次变量初始化 较为耗时 30~50ms
    * fooSolution 仅是减少 初始化干扰
    */
-  def fooSolution(inputSet: InputSet): ResultSet = ResultSet(inputSet.input, "fooSolution")
-  def optimumSolution(inputSet: InputSet): ResultSet
-  def peculiarSolution_1(inputSet: InputSet): ResultSet
-  def peculiarSolution_2(inputSet: InputSet): ResultSet
-  def peculiarSolution_3(inputSet: InputSet): ResultSet
+  private def fooSolution(inputSet: InputSet): ResultSet = ResultSet(inputSet.input, "fooSolution")
+  protected def optimumSolution(inputSet: InputSet): ResultSet
+  protected def peculiarSolution_1(inputSet: InputSet): ResultSet
+  protected def peculiarSolution_2(inputSet: InputSet): ResultSet
+  protected def peculiarSolution_3(inputSet: InputSet): ResultSet
 
-  def assertFunc(res: ResultSet): Unit
+  protected def assertFunc(res: ResultSet): Unit
 
-  def testOneSolution(input: InputSet, solution: InputSet => ResultSet): Unit = {
+  protected def testOneSolution(input: InputSet, solution: InputSet => ResultSet): Unit = {
     // 0.Initialization
     val start = System.currentTimeMillis()
     var isPass = true
