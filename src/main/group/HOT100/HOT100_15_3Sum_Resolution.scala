@@ -24,6 +24,11 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
     println(res.res.map(_.mkString("Result(", ", ", ")")).mkString("Array(", ", ", ")"))
   }
 
+  /**
+   * 总结下: 自己的思路 是最简单最直白，也是 集合类重症使用患者
+   * @param inputSet 一维数组 Array(1,2,3,4,...,n)
+   * @return 二维数组 Array(Array(a,b,c),Array(e,f,g))
+   */
   override protected def selfSolution(inputSet: InputSet): ResultSet = {
     def keyCountReduce(map: mutable.Map[Int, Int], key: Int, reduceValue: Int = 1): Unit = {
       map.put(key, map(key) - reduceValue)
