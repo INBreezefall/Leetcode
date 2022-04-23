@@ -21,11 +21,13 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
 
   override def assertFunc(res: ResultSet): Unit = {
     // println map !!!
+    println(s"[Test] [assert] Function ${res.funcName} ---")
     println(res.res.map(_.mkString("Result(", ", ", ")")).mkString("Array(", ", ", ")"))
   }
 
   /**
    * 总结下: 自己的思路 是最简单最直白，也是 集合类重症使用患者
+   *
    * @param inputSet 一维数组 Array(1,2,3,4,...,n)
    * @return 二维数组 Array(Array(a,b,c),Array(e,f,g))
    */
@@ -67,7 +69,6 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
           keyCountReduce(curLoopNumAndCountMap, one)
 
           // 2.循环遍历所有 two [这个循环 是 要可变的，可减少的]
-          // for (two <- oneCandidatesQueue) {
           val twoAndThreeCandidatesQueue = oneCandidatesQueue.clone()
           while (twoAndThreeCandidatesQueue.nonEmpty) {
             val two = twoAndThreeCandidatesQueue.dequeue()
@@ -237,7 +238,67 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
     ResultSet(threeSum(nums).map(_.map(_.asInstanceOf[Any])).map(_.toArray).toArray, "selfSolution")
   }
 
-  override def optimumSolution(inputSet: InputSet): ResultSet = ???
+  override def optimumSolution(inputSet: InputSet): ResultSet = {
+    val nums = inputSet.input.head.asInstanceOf[Array[Object]].map(_.toString.toInt)
+
+    // 兼容 Leetcode 输入输出函数
+
+    /**
+     * 最优思路:
+     * ①令 输入数组 有序 => 从而可以从 左右 缩小匹配范围
+     * ②认定 当前索引 是 某两个数之和
+     * ③遍历数组 通过 2 个索引 low 左侧索引 high 右侧索引
+     * ④条件判断
+     *    1.lowN + highN = - curN 添加至结果集;
+     *    2.lowN + highN < - curN 令 lowN 变大 low ++;
+     *    3.lowN + highN > - curN 令 highN 变小 high --;
+     * ⑤在 第④步 条件 1 中 进行结果去重 => 跳过相同的值 lowN == (low+1)N 跳过 low+1
+     *
+     * 与自己思路对比:
+     * 1.核心思想的差别
+     *    这边认定的是 当前数 three = 可能的某 两个数(one + two) 之和
+     *    我认定的则是 当前数 one + (for two) = Map 某个数 three
+     * 2.过度使用复杂数据结构
+     *    Queue、Map 大抵是不需要的 耗费了大量时间和内存，导致了 96:4 ms 24 倍差距
+     *    应该清晰的反省到: 集合类确实好使，但是吃资源耗时长，不要过度依赖
+     * @param nums 输入元素数组
+     * @return List(三个数(和为零))
+     */
+    def threeSum(nums: Array[Int]): List[List[Int]] = {
+      // 1.令数组有序
+      val sortedNums = nums.sorted
+      val res: ArrayBuffer[List[Int]] = ArrayBuffer()
+      // 2.这个地方 通过 -2 来避免了 数组数量不足的判断 [用 for 替代 if]
+      for (index <- 0 to sortedNums.length - 2) {
+        // 3.跳过相同的 three(两数之和)
+        if (index == 0 || (index > 0 && sortedNums(index) != sortedNums(index - 1))) {
+          var low = index + 1
+          var high = sortedNums.length -1
+          val sum = - sortedNums(index)
+          // 4.核心思想 驱动左右索引进行收网 尝试捕获 可能的 "和" one(nums[low]) + two(nums[high])
+          while (low < high) {
+            // 4.1 正好匹配
+            if (sortedNums(low) + sortedNums(high) == sum) {
+              res.addOne(List(sortedNums(index), sortedNums(low), sortedNums(high)))
+              // 左右跳过 相同 one two 避免重复
+              while (low < high && sortedNums(low) == sortedNums(low + 1)) low += 1
+              while (low < high && sortedNums(high) == sortedNums(high - 1)) high -= 1
+              // 这个地方一定要追加减 1, 上面的 while 仅是将 左右索引 指向了最后一个 相同 one two 值
+              low += 1
+              high -= 1
+            }
+            // 4.2 "和" 小了 => 增大 左/小侧
+            else if (sortedNums(low) + sortedNums(high) < sum) low += 1
+            // 4.3 "和" 大了 => 减小 右/大侧
+            else high -= 1
+          }
+        }
+      }
+      res.toList
+    }
+
+    ResultSet(threeSum(nums).map(_.map(_.asInstanceOf[Any])).map(_.toArray).toArray, "optimumSolution")
+  }
 
   override def peculiarSolution_1(inputSet: InputSet): ResultSet = ???
 
