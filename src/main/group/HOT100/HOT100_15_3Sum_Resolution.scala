@@ -40,9 +40,6 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
       map.put(key, map(key) + incrValue)
     }
 
-    val nums = inputSet.input.head.asInstanceOf[Array[Object]].map(_.toString.toInt)
-    // println(nums.mkString("Array(", ", ", ")"))
-
     // 兼容 Leetcode 输入输出函数
     def threeSum(nums: Array[Int]): List[List[Int]] = {
       val res: ArrayBuffer[List[Int]] = ArrayBuffer()
@@ -235,13 +232,12 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
       res.toList
     }
 
+    val nums = inputSet.input.head.asInstanceOf[Array[Object]].map(_.toString.toInt)
+    // println(nums.mkString("Array(", ", ", ")"))
     ResultSet(threeSum(nums).map(_.map(_.asInstanceOf[Any])).map(_.toArray).toArray, "selfSolution")
   }
 
   override def optimumSolution(inputSet: InputSet): ResultSet = {
-    val nums = inputSet.input.head.asInstanceOf[Array[Object]].map(_.toString.toInt)
-
-    // 兼容 Leetcode 输入输出函数
 
     /**
      * 最优思路:
@@ -297,6 +293,7 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
       res.toList
     }
 
+    val nums = inputSet.input.head.asInstanceOf[Array[Object]].map(_.toString.toInt)
     ResultSet(threeSum(nums).map(_.map(_.asInstanceOf[Any])).map(_.toArray).toArray, "optimumSolution")
   }
 
