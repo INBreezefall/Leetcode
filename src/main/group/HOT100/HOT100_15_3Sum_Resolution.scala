@@ -240,23 +240,26 @@ class HOT100_15_3Sum_Resolution extends ResolveTemplate {
   override def optimumSolution(inputSet: InputSet): ResultSet = {
 
     /**
-     * 最优思路:
-     * ①令 输入数组 有序 => 从而可以从 左右 缩小匹配范围
-     * ②认定 当前索引 是 某两个数之和
-     * ③遍历数组 通过 2 个索引 low 左侧索引 high 右侧索引
-     * ④条件判断
-     *    1.lowN + highN = - curN 添加至结果集;
-     *    2.lowN + highN < - curN 令 lowN 变大 low ++;
-     *    3.lowN + highN > - curN 令 highN 变小 high --;
-     * ⑤在 第④步 条件 1 中 进行结果去重 => 跳过相同的值 lowN == (low+1)N 跳过 low+1
-     *
+     * 思路简记: 排序 + 双指针
+     * 算法流程:
+     *     ①令 输入数组 有序 => 从而可以从 左右 缩小匹配范围
+     *     ②认定 当前索引处数组值 是 某两个数之和
+     *     ③遍历数组 通过 2 个索引 low 左侧索引 high 右侧索引
+     *     ④条件判断
+     *         1.lowN + highN = - curN 添加至结果集;
+     *         2.lowN + highN < - curN 令 lowN 变大 low ++;
+     *         3.lowN + highN > - curN 令 highN 变小 high --;
+     *     ⑤在 第④步 条件 1 中 进行结果去重 => 跳过相同的值 lowN == (low+1)N 跳过 low+1
+     * 时空复杂度:
+     *     时间复杂度: O(NlogN) + O(N^2^) = O(N^2^)
+     *     空间复杂度: O(1)
      * 与自己思路对比:
-     * 1.核心思想的差别
-     *    这边认定的是 当前数 three = 可能的某 两个数(one + two) 之和
-     *    我认定的则是 当前数 one + (for two) = Map 某个数 three
-     * 2.过度使用复杂数据结构
-     *    Queue、Map 大抵是不需要的 耗费了大量时间和内存，导致了 96:4 ms 24 倍差距
-     *    应该清晰的反省到: 集合类确实好使，但是吃资源耗时长，不要过度依赖
+     *     1.核心思想的差别
+     *         这边认定的是 当前数 three = 可能的某 两个数(one + two) 之和
+     *         我认定的则是 当前数 one + (for two) = Map 某个数 three
+     *     2.过度使用复杂数据结构
+     *         Queue、Map 大抵是不需要的 耗费了大量时间和内存，导致了 96:4 ms 24 倍差距
+     *         应该清晰的反省到: 集合类确实好使，但是吃资源耗时长，不要过度依赖
      * @param nums 输入元素数组
      * @return List(三个数(和为零))
      */
